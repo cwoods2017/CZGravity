@@ -26,13 +26,15 @@ function generate()
 
 //addBigPlanet();
 
-blankIt();
+ //blankIt();
 
 for(i = 0; i < Planets.length; i++)
 {
 
     //xPositions[i] += xSpeeds[i];
    // yPositions[i] += ySpeeds[i];
+   WallCollision(i);
+    
 
     Planets[i].xposition += Planets[i].xspeed;
     Planets[i].yposition += Planets[i].yspeed;
@@ -43,11 +45,14 @@ for(i = 0; i < Planets.length; i++)
     Planets[i].xspeed += getXAcceleration(Planets[i].xposition, Planets[i].yposition, i);
     Planets[i].yspeed += getYAcceleration(Planets[i].xposition, Planets[i].yposition, i);
    
+    
+
+
     //createOrbitCenter();
     cont.beginPath();
     cont.fillStyle = "orange";
     cont.arc(Planets[i].xposition, Planets[i].yposition, Planets[i].radius, 0, 2 *Math.PI);
-    cont.fill();
+    cont.stroke();
 
     console.log("Planet" + i + " - " + Planets[i].xposition + " , " + Planets[i].yposition);
 
@@ -60,12 +65,12 @@ for(i = 0; i < Planets.length; i++)
 function addPlanet()
 {
   
-  xPos = 45;
-  yPos = 600;
-  Xspeed = -2;
-  Yspeed = 0;
-  Mass = .03;
-  Radius = 2;
+  xPos = 375;
+  yPos = 0;
+  Xspeed = -2.5;
+  Yspeed = 2.5;
+  Mass = .01;
+  Radius = 8;
 
   var p = new Planet(xPos, yPos, Xspeed, Yspeed, Mass, Radius);
 
@@ -87,7 +92,7 @@ function addPlanet()
 
 function addSmallPlanet()
 {
-  var p = new Planet(700, 400, -2, -3, .03, 2);
+  var p = new Planet(700, 400, 3, 3.3, 4500, 8);
 
   Planets.push(p);
 }
@@ -183,7 +188,6 @@ function getYAcceleration(pX, pY, arrayPos)
   var distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
 
   var acceleration = massOC/Math.pow(distance, 2); */
- 
   var Yforce = 0;
   for(g = 0; g < Planets.length; g++)
   {
@@ -204,3 +208,49 @@ function getYAcceleration(pX, pY, arrayPos)
 
 
 }
+
+
+
+function WallCollision(i)
+{
+ var r = Planets[i].radius;
+
+if(Planets[i].xposition + r > can.width && Planets[i].xspeed > 0 
+  || Planets[i].xposition - r < 0 && Planets[i].xspeed < 0)
+  Planets[i].xspeed = -Planets[i].xspeed;
+
+if (Planets[i].yposition + r > can.height && Planets[i].yspeed > 0 
+  || Planets[i].yposition -r < 0 && Planets[i].yspeed < 0)
+  Planets[i].yspeed = -Planets[i].yspeed;
+
+
+}
+
+/*function BallCollision(i)
+{
+
+ var Tr = Planets[g].radius + Planets[i].radius;
+for(var g = 0; g < Planets.length; g++)
+{
+  if(g != i)
+  {
+
+    var distanceX = Planets[g].xposition - Planets[i];
+    var distanceY = Planets[g].yposition - i;
+    var distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+    if(distance < Tr)
+    {
+
+    }
+ 
+
+  }
+
+}
+
+
+
+}
+
+
+} */
