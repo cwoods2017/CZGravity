@@ -1,0 +1,26 @@
+canvas {
+
+  border: 1px black solid;
+
+  display: inline-block;
+
+  float: left;
+
+
+}
+
+table {
+
+  border: 1px black solid;
+
+  display: inline-block;
+
+  margin-left: 10px;
+
+}
+
+#subhead {
+
+  text-decoration: underline;
+  
+}
