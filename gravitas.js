@@ -128,7 +128,7 @@ function addFixedPlanet(){
 
  function addBigPlanet()
 {
-  var p = new Planet(375, 0, 2.5, 2.5, 4000, 40, false);
+  var p = new Planet(375, 0, 2.5, 2.5, 4000, 25, false);
 
   Planets.push(p);
 }

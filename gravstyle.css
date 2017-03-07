@@ -1,9 +1,7 @@
 canvas {
 
   border: 1px black solid;
-
   display: inline-block;
-
   float: left;
 
 
@@ -12,9 +10,7 @@ canvas {
 table {
 
   border: 1px black solid;
-
   display: inline-block;
-
   margin-left: 10px;
 
 }
@@ -22,5 +18,5 @@ table {
 #subhead {
 
   text-decoration: underline;
-  
+
 }
