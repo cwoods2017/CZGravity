@@ -86,11 +86,7 @@ function toggleWalls(){
 var c;
 var v = false;
 
-function continualAdd(){
 
-  c = setInterval(addPlanet, 200);
-
-}
 
 function toggleContinualAdding(){
 
@@ -99,7 +95,7 @@ function toggleContinualAdding(){
   if(v == false){
     clearInterval(c);
   }else{
-    c = setInterval(addPlanet, 200);
+    c = setInterval(addCustomPlanet, 200);
   }
 
 
@@ -117,13 +113,54 @@ setInterval(check, 1000);
 
 function savePlanet(){
 
-  planetXpos = document.getElementById("iXP").value;
-  planetYpos = document.getElementById("iYP").value;
+  planetXpos = document.getElementById("iXP").value * 1;
+  planetYpos = document.getElementById("iYP").value * 1;
 
-  planetXspeed = document.getElementById("iXS").value;
-  planetYspeed = document.getElementById("iYS").value;
+  planetXspeed = document.getElementById("iXS").value * 1;
+  planetYspeed = document.getElementById("iYS").value * 1;
 
-  planetMass = document.getElementById("iMS").value;
+  planetMass = document.getElementById("iMS").value * 1;
+
+  if(planetXpos > 950){
+
+    document.getElementById("iXP").value = 950;
+    planetXpos = 950;
+
+
+  }else if(planetXpos < 0){
+
+    document.getElementById("iXP").value = 0;
+    planetXpos = 0;
+
+  }
+
+
+  if(planetYpos > 750){
+
+    document.getElementById("iYP").value = 750;
+    planetYpos = 750;
+
+
+  }else if(planetYpos < 0){
+
+    document.getElementById("iYP").value = 0;
+    planetYpos = 0;
+
+  }
+
+  if(planetMass > 3000){
+
+    document.getElementById("iMS").value = 3000;
+    planetMass = 3000;
+
+  }else if(planetMass < .000001){
+
+    document.getElementById("iMS").value = .000001;
+    planetMass = .000001;
+
+
+  }
+
 
 }
 
@@ -141,11 +178,11 @@ function addPlanet()
 {
 
 
-  xPos = 100;
-  yPos = 475;
-  Xspeed = 2.5;
-  Yspeed = -2.5;
-  Mass = .01;
+  xPos = 950 * Math.random();
+  yPos = 750 * Math.random();
+  Xspeed = 4 *  Math.random();
+  Yspeed = 4 * Math.random();
+  Mass = 3000 * Math.random();
   fixState = false;
 
   var p = new Planet(xPos, yPos, Xspeed, Yspeed, Mass, fixState);
@@ -180,6 +217,12 @@ function addSmallPlanet()
   var p = new Planet(700, 400, 3, 3.3, 4500, false);
 
   Planets.push(p);
+}
+
+function removeLastPlanet(){
+
+  Planets.pop();
+  
 }
 
  class Planet
