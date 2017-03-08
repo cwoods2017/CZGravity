@@ -27,7 +27,7 @@ function generate()
 
 
 
- blankIt();
+blankIt();
 
 for(i = 0; i < Planets.length; i++)
 {
@@ -37,7 +37,9 @@ for(i = 0; i < Planets.length; i++)
 
    if(walls){
    WallCollision(i);
-  }
+    }
+
+//  BallCollision();
 
   if(Planets[i].fixed == false){
     Planets[i].xposition += Planets[i].xspeed;
@@ -59,7 +61,7 @@ for(i = 0; i < Planets.length; i++)
     cont.arc(Planets[i].xposition, Planets[i].yposition, Planets[i].radius, 0, 2 *Math.PI);
     cont.stroke();
 
-    console.log("Planet" + i + " - " + Planets[i].xposition + " , " + Planets[i].yposition);
+    //console.log("Planet" + i + " - " + Planets[i].xposition + " , " + Planets[i].yposition);
 
 
 
@@ -67,7 +69,7 @@ for(i = 0; i < Planets.length; i++)
   }
 }
 
-var planetXpos = 375;
+var planetXpos = 475;
 var planetYpos = 0;
 var planetXspeed = -2.5;
 var planetYspeed = 2.5;
@@ -81,8 +83,39 @@ function toggleWalls(){
 
 }
 
+var c;
+var v = false;
 
-function updatePlanets(){
+function continualAdd(){
+
+  c = setInterval(addPlanet, 200);
+
+}
+
+function toggleContinualAdding(){
+
+  v = !v;
+
+  if(v == false){
+    clearInterval(c);
+  }else{
+    c = setInterval(addPlanet, 200);
+  }
+
+
+
+
+}
+
+function check(){
+
+  console.log(planetMass);
+}
+
+setInterval(check, 1000);
+
+
+function savePlanet(){
 
   planetXpos = document.getElementById("iXP").value;
   planetYpos = document.getElementById("iYP").value;
@@ -94,20 +127,28 @@ function updatePlanets(){
 
 }
 
+function addCustomPlanet(){
+
+  var newP = new Planet(planetXpos, planetYpos, planetXspeed, planetYspeed,
+    planetMass, false);
+
+  Planets.push(newP);
+
+}
+
 
 function addPlanet()
 {
 
 
-  xPos = planetXpos;
-  yPos = planetYpos;
-  Xspeed = planetXspeed;
-  Yspeed = planetYspeed;
-  Mass = planetMass;
-  Radius = 8;
+  xPos = 100;
+  yPos = 475;
+  Xspeed = 2.5;
+  Yspeed = -2.5;
+  Mass = .01;
   fixState = false;
 
-  var p = new Planet(xPos, yPos, Xspeed, Yspeed, Mass, Radius, fixState);
+  var p = new Planet(xPos, yPos, Xspeed, Yspeed, Mass, fixState);
 
   Planets.push(p);
 
@@ -119,7 +160,7 @@ function addPlanet()
 
 function addFixedPlanet(){
 
-  var p = new Planet(375, 375, 0, 0, 4000, 40, true);
+  var p = new Planet(475, 375, 0, 0, 4500, true);
 
   Planets.push(p);
 
@@ -128,7 +169,7 @@ function addFixedPlanet(){
 
  function addBigPlanet()
 {
-  var p = new Planet(375, 0, 2.5, 2.5, 4000, 25, false);
+  var p = new Planet(130, 475, 2.5, 2.5, 2000, false);
 
   Planets.push(p);
 }
@@ -136,7 +177,7 @@ function addFixedPlanet(){
 
 function addSmallPlanet()
 {
-  var p = new Planet(700, 400, 3, 3.3, 4500, 8, false);
+  var p = new Planet(700, 400, 3, 3.3, 4500, false);
 
   Planets.push(p);
 }
@@ -144,14 +185,52 @@ function addSmallPlanet()
  class Planet
 
  {
-  constructor(x, y, xs, ys, m, r, bl)
+  constructor(x, y, xs, ys, m, bl)
   {
      this.xposition = x;
      this.yposition = y;
      this.xspeed = xs;
      this.yspeed = ys;
      this.mass = m;
-     this.radius = r;
+
+     this.radius = 3 + m / 100;
+
+  /*   if(m < 10){
+
+       this.radius = 3;
+
+     }else if(m < 100){
+
+       this.radius = 8;
+
+     }else if(m < 400){
+
+       this.radius = 10;
+
+     }else if(m < 800){
+
+       this.radius = 14;
+
+     }else if(m < 1500){
+
+       this.radius = 18;
+
+     }else if(m < 3000){
+
+       this.radius = 22;
+
+     }else if(m < 4500){
+
+       this.radius = 25;
+
+     }else if(m < 6000){
+
+       this.radius = 38;
+
+     }
+
+*/
+
      this.fixed = bl;
 
   }
@@ -271,31 +350,62 @@ if (Planets[i].yposition + r > can.height && Planets[i].yspeed > 0
 
 }
 
-/*function BallCollision(i)
-{
 
- var Tr = Planets[g].radius + Planets[i].radius;
-for(var g = 0; g < Planets.length; g++)
-{
-  if(g != i)
-  {
+/* function BallCollision(){
 
-    var distanceX = Planets[g].xposition - Planets[i];
-    var distanceY = Planets[g].yposition - i;
-    var distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
-    if(distance < Tr)
-    {
+  for(a = 0; a < Planets.length; a++){
+
+    for(b = 0; b < Planets.length; b++){
+
+      if(a != b){
+        var radiusSum = Planets[a].radius + Planets[b].radius;
+
+        var distanceXB = Planets[a].xposition - Planets[b].xposition;
+        var distanceYB = Planets[a].yposition - Planets[b].yposition;
+
+        var distanceBtwn = Math.sqrt(Math.pow(distanceXB, 2)
+          + Math.pow(distanceYB, 2));
+
+        if(distanceBtwn < radiusSum){
+
+          if(Planets[a].mass >= Planets[b].mass){
+
+            Planets[a].mass += Planets[b].mass;
+
+            Planets[a].radius = 3 + Planets[a].mass / 100;
+
+            Planets.slice(b, 1);
+
+          }else if(Planets[a].mass < Planets[b].mass){
+
+            Planets[b].mass += Planets[a].mass;
+
+            Planets[b].radius = 3 + Planets[b].mass / 100;
+
+            Planets.slice(a, 1);
+
+
+
+          }
+
+
+
+        }
+
+
+
+        }
+
+        break;
+      }
+
+
+
 
     }
 
 
+
   }
 
-}
-
-
-
-}
-
-
-} */
+  */

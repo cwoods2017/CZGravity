@@ -18,7 +18,7 @@ January 26th, 2017
   <body>
 
 
-    <canvas id="myCanvas" width="750" height="750">
+    <canvas id="myCanvas" width="950" height="750">
     </canvas>
 
 
@@ -34,32 +34,27 @@ January 26th, 2017
             <br>
 
             <div style="float: right"> Initial X-Position:
-            <input type="number" id="iXP"  value="375"
-            > </input> </div>
+            <input type="number" id="iXP"  value="475" onchange="savePlanet()"> </input> </div>
             <br>
 
             <br>
             <div style="float: right"> Initial Y-Position:
-            <input type="number" id="iYP"  value="0"
-            > </input> </div>
+            <input type="number" id="iYP"  value="0" onchange="savePlanet()"> </input> </div>
             <br>
 
             <br>
             <div style="float: right"> Initial X-Speed:
-            <input type="number" id="iXS"  value="2.5"
-            > </input> </div>
+            <input type="number" id="iXS"  value="2.5" onchange="savePlanet()"> </input> </div>
             </br>
 
             <br>
             <div style="float: right"> Initial Y-Speed:
-            <input type="number" id="iYS"  value="2.5"
-            > </input> </div>
+            <input type="number" id="iYS"  value="2.5" onchange="savePlanet()" > </input> </div>
             </br>
 
             <br>
             <div style="float: right"> Mass:
-            <input type="number" id="iMS"  value="100"
-            > </input> <div>
+            <input type="number" id="iMS"  value=".01" onchange="savePlanet()"> </input> <div>
             <br>
 
 
@@ -71,33 +66,40 @@ January 26th, 2017
         </td>
       </tr>
 
-      <tr>
+
         <td>
 
-          <button onclick="addPlanet()" style="float: right">
-            Add Planet </button>
+          <button onclick="addCustomPlanet()">
+            Add Custom Planet </button>
 
         </td>
-
+      </tr>
       </tr>
 
       <tr>
         <td>
-          <button onclick="addBigPlanet()" style="float: right">
+          <button onclick="addBigPlanet()">
             Add Big Planet </button>
         </td>
       </tr>
 
       <tr>
         <td>
-          <button onclick="addFixedPlanet()" style="float: right">
+          <button onclick="addFixedPlanet()">
             Add Fixed Planet </button>
         </td>
       </tr>
 
       <tr>
         <td>
-          <button onclick="toggleWalls()" style="float: right"> Toggle Walls
+          <button onclick="toggleWalls()"> Toggle Walls
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <button onclick="toggleContinualAdding()"> Toggle Continuous Adding
           </button>
         </td>
       </tr>
